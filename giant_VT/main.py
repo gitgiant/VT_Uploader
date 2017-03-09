@@ -16,12 +16,14 @@ while userChoice != '5':
 
     userChoice = input()
     if userChoice == '1':
-        # Target = input("Please enter path of file:")
-        targetFile = 'C:/Users/Giant/Desktop/HRC.exe'
+        targetFile = input("Please enter path of file:")
+        # Dummy target file, used for debug
+        # targetFile = 'C:/Users/Giant/Desktop/HRC.exe'
         uploader.upload_file(targetFile)
     if userChoice == '2':
-        target = input("Please enter URL of file:")
-        targetURL = 'https://csuci.blackboard.com/branding/_1_1/logo.png'
+        targetURL = input("Please enter URL of file:")
+        # Dummy URL, used for debug
+        # targetURL = 'https://csuci.blackboard.com/branding/_1_1/logo.png'
         uploader.upload_URL(targetURL)
     if userChoice == '3':
         target = input("Checking resource_list.txt for targets that have completed scanning.")
