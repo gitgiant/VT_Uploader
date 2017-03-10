@@ -27,14 +27,15 @@ def upload_file(targetFile):
         files = {'file': (os.path.basename(targetFile), open(targetFile, 'rb'))}
     else:
         print("Error: File Not Found.")
-        exit(-1)
+        return
 
     # Check if file is greater than max file size
     size = os.path.getsize(targetFile)
     if size > MAX_FILE_SIZE:
-        print("Error file size " + str(round(size/1000,2))+ " kB is greater than 32 MB.")
+        print("Error file size " + str(round(size/1000000,2))+ " MB is greater than 32 MB (virustotal public API filesize limit.")
+        return
     else:
-        print("Filesize: " + str(round(size/1000,2)) + " kB.")
+        print("Filesize: " + str(round(size/1000000,2)) + " MB.")
 
     # If file has passed checks, sha256 and check sha256_list.txt
     found = calculate_sha256(targetFile)
