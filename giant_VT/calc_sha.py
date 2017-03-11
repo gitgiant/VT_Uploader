@@ -1,6 +1,6 @@
 # Opens a file given by targetFile, steps through block by block
 # and generates a sha256.  Displays the resulting sha256,
-# then opens sha256_list to add to list.  If list h
+# then opens sha256_list to add to list.
 import hashlib
 
 def calculate_sha256(targetFile):
@@ -10,7 +10,7 @@ def calculate_sha256(targetFile):
         for block in iter(lambda: f.read(65536), b''):
             sha256.update(block)
 
-    #print("Target File: " + targetFile.name)
+    print("Target File Name: " + f.name)
     print("sha256: " + sha256.hexdigest())
 
     #search the sha256 list for this file's sha256
@@ -25,7 +25,6 @@ def calculate_sha256(targetFile):
     #If not found, add to sha256_list.txt
     if found == False:
         with open('sha256_list', "a") as sha256write:
-            # COMMENTED OUT FOR DEBUG
-            # sha256write.write(sha256.hexdigest() + '\n')
+            sha256write.write(sha256.hexdigest() + "," + f.name + '\n')
             return found
 
