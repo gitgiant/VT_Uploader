@@ -5,7 +5,7 @@ This tool is used to upload jobs and check if jobs have completed, as well as di
 ####What is Virus Total?
 Virus Total is a website where you can upload a file or supply a URL, and VT will scan the target with around 60 different virus scanners from industry
 
-Uploading to VT expands the database, discovers more malicious files and false positives, and helping the security community.
+Uploading to VT expands the database, discovers more malicious files and false positives, and helps the security community.
 
 <a href="https://www.virustotal.com/en/about/" title="About Virus Total">
 Click here to find out more about Virus Total</a>
