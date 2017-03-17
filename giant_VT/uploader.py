@@ -10,7 +10,7 @@ from giant_VT.report import display_URL_report
 
 MAX_FILE_SIZE = 32000000 # 32 megabytes
 
-
+# TODO: Implement threading, exception handling when connection refused, repair lists if failed upload
 def upload_file(targetFile):
 
     # Set API key to token key

@@ -3,7 +3,7 @@ from giant_VT.tokens import key
 from giant_VT import report
 
 
-# TODO: Scan resource_list.txt, find files that are completed and remove them
+# TODO: Scan resource_list.txt, find files that are completed and remove them, create queue
 def check_file_scans():
 
     fileResourceList = open('resource_list', 'rb')
