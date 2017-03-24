@@ -1,4 +1,4 @@
-from giant_VT.config import header
+from giant_VT.config import *
 from giant_VT import uploader
 from giant_VT import file_retriever
 import time
@@ -35,39 +35,7 @@ if __name__ == '__main__':
 
         # Settings
         elif userChoice == '4':
-            choice ='0'
-
-            while choice != '5':
-                # TODO: configure settings
-                print("Please select from the following options:")
-                print("1: Purge lists.")
-                print("2: Print lists.")
-                # print("2: Auto check if if queued scans have completed upon launch.")
-                print("5: Return to main menu.")
-                choice = input()
-                if choice == '1':
-                    print("Purging resoruce_list.txt, sha256_list.txt, and URL_list.txt")
-                    f = open('resource_list', 'r+')
-                    f.seek(0)
-                    f.truncate()
-                    f = open('sha256_list', 'r+')
-                    f.seek(0)
-                    f.truncate()
-                    f = open('URL_list', 'r+')
-                    f.seek(0)
-                    f.truncate()
-                    f.close()
-                if choice == '2':
-                    print("Printing resource_list.txt:")
-                    f = open('resource_list', 'r')
-                    print(f.read().replace(",","\n"))
-                    print("Printing sha256_list.txt:")
-                    f = open('sha256_list', 'r')
-                    print(f.read().replace(",","\n"))
-                    print("Printing URL_list.txt:")
-                    f = open('URL_list', 'r')
-                    print(f.read().replace(",","\n"))
-                    f.close()
+            configure_settings()
 
         elif userChoice == '5':
             print("Exiting.")
