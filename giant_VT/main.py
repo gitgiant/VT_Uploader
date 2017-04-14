@@ -1,6 +1,8 @@
 from giant_VT.config import *
 from giant_VT import uploader
+from giant_VT.calc_sha import calculate_sha256
 from giant_VT import file_retriever
+from giant_VT.shimCache import *
 import time
 
 if __name__ == '__main__':
@@ -14,8 +16,9 @@ if __name__ == '__main__':
         print("1: Select a file.")
         print("2: Select a URL.")
         print("3: Check if queued scans have completed.")
-        print("4: Configure settings.")
-        print("5: Exit.")
+        print("4: Pull recently executed files from Windows shim cache.")
+        print("5: Configure settings.")
+        print("6: Exit.")
 
         userChoice = input()
         # File
@@ -33,11 +36,23 @@ if __name__ == '__main__':
             print("Checking resource_list.txt for targets that have completed scanning.")
             file_retriever.check_file_scans()
 
-        # Settings
         elif userChoice == '4':
+            exeList = pull_shim_cache()
+            try:
+                
+                for line in exeList:
+                    if os.path.isfile(line):
+                        print(line + " is a valid file.")
+                        uploader.upload_file(line)
+                    else:
+                        pass
+            except Exception as e:
+                print(e)
+        # Settings
+        elif userChoice == '5':
             configure_settings()
 
-        elif userChoice == '5':
+        elif userChoice == '6':
             print("Exiting.")
             exit(1)
         # Whoops
