@@ -39,11 +39,12 @@ if __name__ == '__main__':
         elif userChoice == '4':
             exeList = pull_shim_cache()
             try:
-                
                 for line in exeList:
                     if os.path.isfile(line):
                         print(line + " is a valid file.")
                         uploader.upload_file(line)
+                        # Virus Total API rules state you must not make more than 4 requests a minute.
+                        time.sleep(15)
                     else:
                         pass
             except Exception as e:
