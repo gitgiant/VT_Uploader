@@ -7,28 +7,32 @@ from giant_VT.tokens import key
 from giant_VT.calc_sha import calculate_sha256
 from giant_VT.report import display_file_report
 from giant_VT.report import display_URL_report
+import time
+import math
 
 MAX_FILE_SIZE = 32000000 # 32 megabytes
 
-# TODO: Implement threading, exception handling when connection refused, repair lists if failed upload
+# TODO: Implement threading, exception handling when connection refused, repair lists if failed upload, return time taken to upload (subtract from API timer)
 def upload_file(targetFile):
-
+    start = time.time()
     # Set API key to token key
     params = {'apikey': key}
-
+    uploadTime = int()
     # Open target file
     if os.path.isfile(targetFile):
         print("Filename: " + os.path.basename(targetFile))
         files = {'file': (os.path.basename(targetFile), open(targetFile, 'rb'))}
     else:
         print("Error: File Not Found.")
-        return
+        # return a uploadTime of '15' seconds to make waitTime 0 for next job (15 - uploadTime = 0)
+        return 15
 
     # Check if file is greater than max file size
     size = os.path.getsize(targetFile)
     if size > MAX_FILE_SIZE:
-        print("Error file size " + str(round(size/1000000,2))+ " MB is greater than 32 MB (virustotal public API filesize limit.")
-        return
+        print("Error file size " + str(round(size/1000000,2))+ " MB is greater than 32 MB (virustotal public API filesize limit.)")
+        # return a uploadTime of '15' seconds to make waitTime 0 for next job (15 - uploadTime = 0)
+        return 15
     else:
         print("Filesize: " + str(round(size/1000000,2)) + " MB.")
 
@@ -38,26 +42,31 @@ def upload_file(targetFile):
     if found:
         print("File is present in local queue, it has already been uploaded to virus total")
         print("Please check if queued scans have completed and view their reports.")
-        print("Returning to main menu")
-        return
+        # return a uploadTime of '15' seconds to make waitTime 0 for next job (15 - uploadTime = 0)
+        return 15
     # File has not been found in sha256_list.txt
     else:
         print("Uploading, please wait...")
         print("______________________________________________")
-        response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
-        # TODO: Whenever you exceed the public API request rate limit a 204 HTTP status code is returned.
-        # TODO: If you try to perform calls to functions for which you do not have the required privileges
-        # TODO: an HTTP Error 403 Forbidden is raised.
-        json_response = response.json()
-        print("Upload Complete")
+        try:
+            response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
+            # TODO: Whenever you exceed the public API request rate limit a 204 HTTP status code is returned.
+            # TODO: If you try to perform calls to functions for which you do not have the required privileges
+            # TODO: an HTTP Error 403 Forbidden is raised.
+            json_response = response.json()
+            end = time.time()
+            uploadTime = math.floor(end - start)
+            print("Upload Complete @ " + str(uploadTime) + " seconds.")
 
-        # display information from returned json document
-        # display_file_report(json_response)
-
+            # display information from returned json document
+            # display_file_report(json_response)
+        except Exception as e:
+            print(e)
         # add response to the csv response file to scan later
         with open('resource_list', "a") as fileWrite:
-            fileWrite.write(json_response['resource'] + ',')
+            fileWrite.write(json_response['resource'] + '\n')
 
+    return uploadTime
 
 def upload_URL(targetURL):
     # Sets API key to key token, sets URL

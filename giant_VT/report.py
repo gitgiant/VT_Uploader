@@ -118,7 +118,7 @@ def is_non_zero_file(fpath):
     return os.path.isfile(fpath) and os.path.getsize(fpath) > 0
 
 
-# go into sha256_list and return the file name that matches the sha we have on file
+# go into sha256_list and return the file name that matches the sha hash that is on file
 def return_filename(sha256):
     with open('sha256_list', "r") as sha256Read:
         for line in sha256Read:

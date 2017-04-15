@@ -9,7 +9,7 @@ Y8,        88 88 ,adPPPPP88 88       88  88
  Y8a.    .a88 88 88,    ,88 88       88  88,
   `"Y88888P"  88 `"8bbdP"Y8 88       88  "Y888
 ______________________________________________
-Version 0.2     http://www.github.com/gitgiant
+Version 0.3     http://www.github.com/gitgiant
 Thank you for contributing to the virus total community.
 Please be patient as scans may take awhile to complete."""
 
@@ -40,11 +40,11 @@ def configure_settings():
                 f.close()
             elif choice == 'n':
                 # exits
-                choice == '5'
+                pass
             else:
                 print("Invalid input")
                 pass
-        if choice == '2':
+        elif choice == '2':
             print("Printing resource_list.txt:")
             f = open('resource_list', 'r')
             print(f.read().replace(",", "\n"))
@@ -55,3 +55,5 @@ def configure_settings():
             f = open('URL_list', 'r')
             print(f.read().replace(",", "\n"))
             f.close()
+        elif choice == '5':
+            return

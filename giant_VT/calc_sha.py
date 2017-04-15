@@ -6,6 +6,7 @@ import hashlib
 def calculate_sha256(targetFile):
     sha256 = hashlib.sha256()
 
+    # Build sha256 hex digest block by block
     with open(targetFile, 'rb') as f:
         for block in iter(lambda: f.read(65536), b''):
             sha256.update(block)
