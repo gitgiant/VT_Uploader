@@ -1,14 +1,15 @@
 # Checks if target file is a file, opens the file, checks size of file
 # Calls calculate_sha256, which checks if file is already in sha256_list
 # If everything succeeds, uploads file to Virus Total
-import requests
-import os
-from giant_VT.tokens import key
-from giant_VT.calc_sha import calculate_sha256
-from giant_VT.report import display_file_report
-from giant_VT.report import display_URL_report
-import time
 import math
+import os
+import time
+
+import requests
+from report import display_URL_report
+from tokens import key
+
+from calc_sha import calculate_sha256
 
 MAX_FILE_SIZE = 32000000 # 32 megabytes
 

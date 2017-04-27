@@ -1,15 +1,19 @@
-import requests
-from giant_VT.tokens import key
-from giant_VT import report
-import time
-import os
 import math
-import shutil
+import time
+
+import requests
+from tokens import key
+
+import report
+
 
 # TODO: Scan resource_list.txt, find files that are completed and remove them, create queue
 def check_file_scans():
+    try:
+        fileResourceList = open('resource_list', 'rb')
+    except Exception as e:
+        print(e)
 
-    fileResourceList = open('resource_list', 'rb')
     reportList = fileResourceList.readlines()
 
     numLines = sum(1 for line in open('resource_list', 'rb'))
@@ -30,7 +34,10 @@ def check_file_scans():
         else:
             sendList = ""
             for i in range (0, 4):
-                sendList+=reportList[i].decode("utf-8") + ','
+                try:
+                    sendList+=reportList[i].decode("utf-8") + ','
+                except:
+                    pass
             sendList.rstrip(',')
             params = {'apikey': key, 'resource': sendList}
             reportList = reportList[4:]

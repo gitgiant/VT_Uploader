@@ -21,7 +21,6 @@ def configure_settings():
         print("Please select from the following options:")
         print("1: Purge lists.")
         print("2: Print lists.")
-        # print("2: Auto check if if queued scans have completed upon launch.")
         print("5: Return to main menu.")
         choice = input()
         if choice == '1':
@@ -45,15 +44,18 @@ def configure_settings():
                 print("Invalid input")
                 pass
         elif choice == '2':
-            print("Printing resource_list.txt:")
-            f = open('resource_list', 'r')
-            print(f.read().replace(",", "\n"))
-            print("Printing sha256_list.txt:")
-            f = open('sha256_list', 'r')
-            print(f.read().replace(",", "\t"))
-            print("Printing URL_list.txt:")
-            f = open('URL_list', 'r')
-            print(f.read().replace(",", "\n"))
-            f.close()
+            try:
+                import os
+                f = open('resource_list', 'r')
+                print(f.read().replace(",", "\n"))
+                print("Printing sha256_list.txt:")
+                f = open('sha256_list', 'r')
+                print(f.read().replace(",", "\t"))
+                print("Printing URL_list.txt:")
+                f = open('URL_list', 'r')
+                print(f.read().replace(",", "\n"))
+                f.close()
+            except Exception as e:
+                print(e)
         elif choice == '5':
             return

@@ -1,9 +1,9 @@
-from giant_VT.config import *
-from giant_VT import uploader
-from giant_VT.calc_sha import calculate_sha256
-from giant_VT import file_retriever
-from giant_VT.shimCache import *
 import time
+from config import *
+from shimCache import *
+import file_retriever
+import uploader
+import sys
 
 # TODO: Clean up output, add progress bar for uploads
 if __name__ == '__main__':
@@ -11,33 +11,52 @@ if __name__ == '__main__':
     time.sleep(.4)
 
     userChoice = '0'
-    while userChoice != '6':
+    while userChoice != '7':
         print("______________________________________________")
         print("Please select from the following options:")
         print("1: Select a file.")
-        print("2: Select a URL.")
-        print("3: Check if queued scans have completed.")
-        print("4: Pull recently executed files from Windows shim cache.")
-        print("5: Configure settings.")
-        print("6: Exit.")
+        print("2: Select a Directory.")
+        print("3: Select a URL.")
+        print("4: Check if queued scans have completed.")
+        print("5: Pull recently executed files from Windows shim cache.")
+        print("6: Configure settings.")
+        print("7: Exit.")
 
         userChoice = input()
         # File
         if userChoice == '1':
-            targetFile = input("Please enter path of file:")
+            targetFile = input("Please enter the path of the file:")
             uploader.upload_file(targetFile)
 
-        # URL
+        # Directory
         elif userChoice == '2':
+            print("Warning: This will upload all found files in this directory and subdirectories.")
+            rootDir = input("Please enter path of the Directory:\n")
+            # check if directory exists
+            if os.path.isdir(rootDir):
+                print("Uploading Directory: " + os.path.basename(rootDir))
+            else:
+                print("Error: Directory Not Found.")
+                continue
+            # walk through directory
+            for folder, subs, files in os.walk(rootDir):
+                for fileName in files:
+                    uploader.upload_file(os.path.join(folder,fileName))
+
+        # URL
+        elif userChoice == '3':
             targetURL = input("Please enter URL of file:")
             uploader.upload_URL(targetURL)
 
+
+
         # Check Scans
-        elif userChoice == '3':
+        elif userChoice == '4':
             print("Checking resource_list.txt for targets that have completed scanning.")
             file_retriever.check_file_scans()
 
-        elif userChoice == '4':
+        # Pull Shim Cache
+        elif userChoice == '5':
             exeList = pull_shim_cache()
             # TODO put batch upload in pull_shim_cache(), spawn thread
             try:
@@ -57,10 +76,10 @@ if __name__ == '__main__':
             except Exception as e:
                 print(e)
         # Settings
-        elif userChoice == '5':
+        elif userChoice == '6':
             configure_settings()
 
-        elif userChoice == '6':
+        elif userChoice == '7':
             print("Exiting.")
             exit(1)
         # Whoops
