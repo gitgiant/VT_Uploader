@@ -24,9 +24,9 @@ def configure_settings():
         print("5: Return to main menu.")
         choice = input()
         if choice == '1':
-            choice = input("Are you sure? [y/n]: ").lower()
+            choice = input("This will clear all lists including already scanned files.  Are you sure? [y/n]: ").lower()
             if choice == 'y':
-                print("Purging resoruce_list.txt, sha256_list.txt, and URL_list.txt")
+                print("Purging resource_list.txt, sha256_list.txt, and URL_list.txt")
                 f = open('resource_list', 'r+')
                 f.seek(0)
                 f.truncate()
@@ -45,7 +45,7 @@ def configure_settings():
                 pass
         elif choice == '2':
             try:
-                import os
+                print("Printing resource_list.txt:")
                 f = open('resource_list', 'r')
                 print(f.read().replace(",", "\n"))
                 print("Printing sha256_list.txt:")
