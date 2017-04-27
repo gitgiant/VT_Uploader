@@ -10,6 +10,9 @@ if __name__ == '__main__':
     print(header)
     time.sleep(.4)
 
+    # sets the current working directory to the folder which the script was run
+    os.chdir(os.path.dirname(sys.argv[0]))
+    
     userChoice = '0'
     while userChoice != '7':
         print("______________________________________________")

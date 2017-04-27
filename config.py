@@ -12,7 +12,6 @@ ______________________________________________
 Version 0.3     http://www.github.com/gitgiant
 Thank you for contributing to the virus total community.
 Please be patient as scans may take awhile to complete."""
-
 def configure_settings():
     choice = '0'
 
