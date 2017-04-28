@@ -9,10 +9,15 @@ Uploading to VT expands the database, discovers more malicious files and false p
 
 <a href="https://www.virustotal.com/en/about/" title="About Virus Total">
 Click here to find out more about Virus Total</a>>
+
 ####Requirements
+
 Virus Total public/private API key.
+
 Python 3+
-<a href="http://docs.python-requests.org/en/master/" title="Requests Python Module"> 
+
+<a href="http://docs.python-requests.org/en/master/" title="Requests Python Module" Requests Python Module </a>>> 
+
 Windows Forensics options available only on Windows
 
 ####Instructions
