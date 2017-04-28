@@ -8,7 +8,7 @@ Virus Total is a website where you can upload a file or supply a URL, and VT wil
 Uploading to VT expands the database, discovers more malicious files and false positives, and helps the security community.
 
 <a href="https://www.virustotal.com/en/about/" title="About Virus Total">
-Click here to find out more about Virus Total</a>
+Click here to find out more about Virus Total</a>>
 ####Requirements
 Virus Total public/private API key.
 Python 3+
