@@ -1,9 +1,10 @@
 import time
 from config import *
-from shimCache import *
+import os
 import file_retriever
 import uploader
 import sys
+import platform
 
 # TODO: Clean up output, add progress bar for uploads
 if __name__ == '__main__':
@@ -12,7 +13,7 @@ if __name__ == '__main__':
 
     # sets the current working directory to the folder which the script was run
     os.chdir(os.path.dirname(sys.argv[0]))
-    
+
     userChoice = '0'
     while userChoice != '7':
         print("______________________________________________")
@@ -60,6 +61,13 @@ if __name__ == '__main__':
 
         # Pull Shim Cache
         elif userChoice == '5':
+            # Test for Windows
+            if platform.system() is 'Windows':
+                from shimCache import *
+            else:
+                print('Os Detected: ' + platform.system())
+                print('Windows forensics features are only available on windows.')
+                continue
             exeList = pull_shim_cache()
             # TODO put batch upload in pull_shim_cache(), spawn thread
             try:
