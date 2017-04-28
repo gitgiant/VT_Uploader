@@ -23,8 +23,7 @@ Windows Forensics options available only on Windows
 ####Instructions
 Using this tool requires a Virus Total key which is linked with a VT account, in order to interact with the API.
 
-1.) 
-<a href="https://www.virustotal.com/en/documentation/virustotal-community/#dlg-join" title=Join our Community"> Click here to learn about joining the Virus Total community</a>
+1.) <a href="https://www.virustotal.com/en/documentation/virustotal-community/#dlg-join">Click here to learn about joining the Virus Total community</a>
 
 2.) Click 'Join our community'
 
