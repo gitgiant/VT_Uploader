@@ -12,8 +12,11 @@ if __name__ == '__main__':
     time.sleep(.4)
 
     # sets the current working directory to the folder which the script was run
-    os.chdir(os.path.dirname(sys.argv[0]))
-
+    if (platform.system()) is 'Windows':
+        os.chdir(os.path.dirname(sys.argv[0]))
+    else:
+        os.chdir(os.getcwd())
+    print(os.getcwd())
     userChoice = '0'
     while userChoice != '7':
         print("______________________________________________")
