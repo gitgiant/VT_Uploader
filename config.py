@@ -20,6 +20,7 @@ def configure_settings():
         print("Please select from the following options:")
         print("1: Purge lists.")
         print("2: Print lists.")
+        print("3: Change API key.")
         print("5: Return to main menu.")
         choice = input()
         if choice == '1':
@@ -56,5 +57,8 @@ def configure_settings():
                 f.close()
             except Exception as e:
                 print(e)
+        # TODO: allow user to change API key
+        elif choice == '3':
+            print("Please ")
         elif choice == '5':
             return

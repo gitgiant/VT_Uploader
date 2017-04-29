@@ -6,7 +6,7 @@ import uploader
 import sys
 import platform
 
-# TODO: Clean up output, add progress bar for uploads
+# TODO: Clean up output, add progress bar for uploads,
 if __name__ == '__main__':
     print(header)
     time.sleep(.4)
@@ -49,6 +49,8 @@ if __name__ == '__main__':
             for folder, subs, files in os.walk(rootDir):
                 for fileName in files:
                     uploader.upload_file(os.path.join(folder,fileName))
+                    # API limits 600 uploads / minute
+                    time.sleep(.1)
 
         # URL
         elif userChoice == '3':
@@ -68,8 +70,8 @@ if __name__ == '__main__':
             if platform.system() is 'Windows':
                 from shimCache import *
             else:
-                print('Os Detected: ' + platform.system())
-                print('Windows forensics features are only available on windows.')
+                print('OS Detected: ' + platform.system())
+                print('Unfortunately, Windows forensics features are only available on Windows.')
                 continue
             exeList = pull_shim_cache()
             # TODO put batch upload in pull_shim_cache(), spawn thread
@@ -90,6 +92,7 @@ if __name__ == '__main__':
             except Exception as e:
                 print(e)
         # Settings
+        # TODO: Allow user to change key, change from public key to private key mode
         elif userChoice == '6':
             configure_settings()
 

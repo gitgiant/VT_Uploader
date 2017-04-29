@@ -59,12 +59,12 @@ def check_file_scans():
         print("Waiting " + str(15 - retrieveTime) + " seconds to upload next file (Virus Total public API rules state 4 requests a minute).")
         time.sleep(15 - retrieveTime)
 
-        # Delete the first four lines of resource list as they have been reported on.
-        # TODO make more efficient, move into report.py as only the scans that have finished should be removed from resource_list
-        with open('resource_list', 'r') as fin:
-            data = fin.read().splitlines(True)
-        with open('resource_list', 'w') as fout:
-            fout.writelines(data[4:])
+        # # Delete the first four lines of resource list as they have been reported on.
+        # # TODO make more efficient, move into report.py as only the scans that have finished should be removed from resource_list
+        # with open('resource_list', 'r') as fin:
+        #     data = fin.read().splitlines(True)
+        # with open('resource_list', 'w') as fout:
+        #     fout.writelines(data[4:])
         numLines = sum(1 for line in open('resource_list', 'rb'))
         print("Resource_list.txt has " + str(numLines) + " files left to check for reports.")
 
