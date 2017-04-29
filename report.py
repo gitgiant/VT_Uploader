@@ -106,14 +106,13 @@ def display_scan_report(json_response):
                 else:
                     print("Invalid input.")
                     choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):")
-            
+
             # Delete the first four lines of resource list as they have been reported on.
             # TODO make more efficient, move into report.py as only the scans that have finished should be removed from resource_list
             with open('resource_list', 'r') as fin:
                 data = fin.read().splitlines(True)
             with open('resource_list', 'w') as fout:
                 fout.writelines(data[4:])
-            numLines = sum(1 for line in open('resource_list', 'rb'))
         # TODO: present more information to the user about queued jobs
         # response code of -2 means the job is queued and still processing
         elif dicts['response_code'] == -2:
