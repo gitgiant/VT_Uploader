@@ -18,7 +18,7 @@ if len(sys.argv) > 1:
             else:
                 print("Error " + sys.argv[arg+1] + " is not a file.")
         # -d directory upload
-        elif sys.argv[arg] == '-d' or sys.argv[arg] == '--directory':
+        elif sys.argv[arg] == '-d' or sys.argv[arg] == '--dir':
             if os.path.isdir(sys.argv[arg+1]):
                 uploader.upload_directory(sys.argv[arg+1])
             else:
@@ -31,6 +31,8 @@ if len(sys.argv) > 1:
         elif sys.argv[arg] == '-r' or sys.argv[arg] == '--report':
             file_retriever.check_file_scans()
         # Incorrect input
+        elif sys.argv[arg] == '-h' or sys.argv[arg] == '--help':
+            display_help()
         else:
             display_usage()
         exit()
