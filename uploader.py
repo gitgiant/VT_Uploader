@@ -5,7 +5,18 @@ import math
 import os
 import time
 
-import requests
+# check if requests module installed
+try:
+    import requests
+except ImportError:
+    print("Requests Module required.  Attempting to install using pip.")
+    try:
+        import pip
+        pip.main(['install', requests])
+    except Exception as e:
+        print(e)
+        print("Pip module not found!  Please go to http://docs.python-requests.org/en/master/ to install requests Module.")
+
 from report import display_URL_report
 from tokens import key
 
