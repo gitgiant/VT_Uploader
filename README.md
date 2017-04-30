@@ -23,34 +23,33 @@ Windows Forensics options available only on Windows
 ####Instructions
 Using this tool requires a Virus Total key which is linked with a VT account, in order to interact with the API.  To obtain a VT account and public API key, follow these instructions:
 
-1.) <a href="https://www.virustotal.com/en/documentation/virustotal-community/#dlg-join">Click here to learn about joining the Virus Total community</a>
+1. <a href="https://www.virustotal.com/en/documentation/virustotal-community/#dlg-join">Click here to learn about joining the Virus Total community</a>
 
-2.) Click 'Join our community'
+2. Click 'Join our community'
 
-3.) Once an account has been set up and you are logged in, click on the profile picture in the upper right corner
+3. Once an account has been set up and you are logged in, click on the profile picture in the upper right corner
 
-4.) Select 'My API Key'
+4. Select 'My API Key'
 
-5.) Edit the `giant_VT/tokens.py` file, insert your API key into the key field
+5. Edit the `giant_VT/tokens.py` file, insert your API key into the key field 
+  *(`key='YOUR KEY GOES HERE'`)
 
-`key='YOUR KEY GOES HERE'`
+6. Run `main.py` and provide a valid target (File path, Directory path, or URL)
 
-6.) Run `main.py` and provide a valid target (File path, Directory path, or URL)
+7. If a target is not in the Virus Total database, you will be placed in a queue
 
-7.) If a target is not in the Virus Total database, you will be placed in a queue
+8. Queue should take anywhere from a minute to an hour, depends on traffic and size of jobs
 
-8.) Queue should take anywhere from a minute to an hour, depends on traffic and size of jobs
+9. Select `Check if queued scans have completed` in the main menu to see reports on completed jobs 
 
-9.) Select `Check if queued scans have completed` in the main menu to see reports on completed jobs 
+10. To purge the queued jobs list, go into `Configure settings` and select `Purge lists`
 
-10.) To purge the queued jobs list, go into `Configure settings` and select `Purge lists`
-
-Command Line usage:
+####Command Line usage:
 
 main.py [option] <argument>
 
 Options:
-
+```
 -f, --file   <File Path>      Upload a File. 
 
 -d, --dir    <Directory Path> Upload a Directory.  
@@ -60,3 +59,4 @@ Options:
 -r, --report                  Check Reports.
 
 -h, --help                    Show Help.
+```
