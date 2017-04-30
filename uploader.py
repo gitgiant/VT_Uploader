@@ -13,6 +13,7 @@ from calc_sha import calculate_sha256
 
 MAX_FILE_SIZE = 32000000 # 32 megabytes
 
+
 # TODO: Implement threading, exception handling when connection refused, repair lists if failed upload, return time taken to upload (subtract from API timer)
 def upload_file(targetFile):
     start = time.time()
@@ -69,6 +70,7 @@ def upload_file(targetFile):
 
     return uploadTime
 
+# TODO implement
 def upload_URL(targetURL):
     # Sets API key to key token, sets URL
     params = {'apikey': key, 'url': targetURL}
@@ -94,3 +96,11 @@ def upload_URL(targetURL):
     display_URL_report(json_response)
     with open('URL_list', "a") as URLWrite:
         URLWrite.write(json_response['resource'] + ',')
+
+def upload_directory(targetDirectory):
+    # walk through directory
+    for folder, subs, files in os.walk(targetDirectory):
+        for fileName in files:
+            upload_file(os.path.join(folder, fileName))
+            # API limits 600 uploads / minute
+            time.sleep(.1)

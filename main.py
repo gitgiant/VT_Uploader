@@ -5,7 +5,35 @@ import file_retriever
 import uploader
 import sys
 import platform
+import urllib
 
+# Command Line tools
+if len(sys.argv) > 1:
+    for arg in range(1, len(sys.argv)):
+        # -f file upload
+        if sys.argv[arg] == '-f' or sys.argv[arg] == '--file':
+            # if -f is followed by a file, then upload it
+            if os.path.isfile(sys.argv[arg+1]):
+                uploader.upload_file(sys.argv[arg+1])
+            else:
+                print("Error " + sys.argv[arg+1] + " is not a file.")
+        # -d directory upload
+        elif sys.argv[arg] == '-d' or sys.argv[arg] == '--directory':
+            if os.path.isdir(sys.argv[arg+1]):
+                uploader.upload_directory(sys.argv[arg+1])
+            else:
+                print("Error " + sys.argv[arg+1] + " is not a directory.")
+
+        # -u URL upload TODO: Validate urls
+        elif sys.argv[arg] == '-u' or sys.argv[arg] == '--url':
+            uploader.upload_URL(sys.argv[arg+1])
+        # -r check reports
+        elif sys.argv[arg] == '-r' or sys.argv[arg] == '--report':
+            file_retriever.check_file_scans()
+        # Incorrect input
+        else:
+            display_usage()
+        exit()
 # TODO: Clean up output, add progress bar for uploads,
 if __name__ == '__main__':
     print(header)
@@ -16,7 +44,6 @@ if __name__ == '__main__':
         os.chdir(os.path.dirname(sys.argv[0]))
     else:
         os.chdir(os.getcwd())
-    print(os.getcwd())
     userChoice = '0'
     while userChoice != '7':
         print("______________________________________________")
@@ -42,21 +69,21 @@ if __name__ == '__main__':
             # check if directory exists
             if os.path.isdir(rootDir):
                 print("Uploading Directory: " + os.path.basename(rootDir))
+                uploader.upload_directory(rootDir)
             else:
                 print("Error: Directory Not Found.")
                 continue
             # walk through directory
-            for folder, subs, files in os.walk(rootDir):
-                for fileName in files:
-                    uploader.upload_file(os.path.join(folder,fileName))
-                    # API limits 600 uploads / minute
-                    time.sleep(.1)
+            # for folder, subs, files in os.walk(rootDir):
+            #     for fileName in files:
+            #         uploader.upload_file(os.path.join(folder,fileName))
+            #         # API limits 600 uploads / minute
+            #         time.sleep(.1)
 
         # URL
         elif userChoice == '3':
             targetURL = input("Please enter URL of file:")
             uploader.upload_URL(targetURL)
-
 
 
         # Check Scans
@@ -102,4 +129,3 @@ if __name__ == '__main__':
         # Whoops
         else:
             print("Incorrect input.")
-

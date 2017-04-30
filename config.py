@@ -62,3 +62,10 @@ def configure_settings():
             print("Please ")
         elif choice == '5':
             return
+def display_usage():
+    print("""Usage main.py [option] <argument>\nOptions:
+-f, --file   <File Path>      Upload a File.
+-d, --dir    <Directory Path> Upload a Directory.
+-u, --url    <URL>            Upload a URL.
+-r, --report                  Check Reports.
+-h, --help                    Show Help.""")
