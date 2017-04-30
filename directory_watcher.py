@@ -16,6 +16,7 @@ if __name__ == "__main__":
     try:
         while True:
             time.sleep(1)
+    # Keyboard Interrupt in pycharm is ctrl-f2
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
