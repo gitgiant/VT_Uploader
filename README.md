@@ -1,4 +1,4 @@
-#### Virus Total Uploader
+## Virus Total Uploader
 
 Uploads a target file, directory, or URL to Virus Total.  If the target is not in the VT database, your scan will be queued and completed shortly.
 This tool is used to upload jobs and check if jobs have completed, as well as display reports on completed jobs.
@@ -42,6 +42,22 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 9. Select `Check if queued scans have completed` in the main menu to see reports on completed jobs 
 
 10. To purge the queued jobs list, go into `Configure settings` and select `Purge lists`
+
+#### About Scans, and public API rules
+
+Uploading to Virus Total and getting reports is an asynchronous process.
+
+This means that an uploaded target's report is not immediately available.
+
+Come back later and select the "check if queued scans have completed" option to see completed reports.
+
+Using a public API key, you are limited to 4 requests per minute (once every 15 seconds).
+
+A 'request' is either an upload, or 4 reports.  
+
+If you have a private API key, the request rate is greatly increased (600 requests per minute).
+
+[Click here to find out more about the Virus Total public API rules](https://www.virustotal.com/en/documentation/public-api/)
 
 #### Command Line usage:
 ```
