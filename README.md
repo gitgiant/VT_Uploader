@@ -21,7 +21,7 @@ Python 3+
 Windows Forensics options available only on Windows
 
 ####Instructions
-Using this tool requires a Virus Total key which is linked with a VT account, in order to interact with the API.
+Using this tool requires a Virus Total key which is linked with a VT account, in order to interact with the API.  To obtain a VT account and public API key, follow these instructions:
 
 1.) <a href="https://www.virustotal.com/en/documentation/virustotal-community/#dlg-join">Click here to learn about joining the Virus Total community</a>
 
@@ -35,7 +35,7 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 
 `key='YOUR KEY GOES HERE'`
 
-6.) Run `main.py` and provide a valid file path (less than 32 MB) or URL
+6.) Run `main.py` and provide a valid target (File path, Directory path, or URL)
 
 7.) If a target is not in the Virus Total database, you will be placed in a queue
 
@@ -44,3 +44,19 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 9.) Select `Check if queued scans have completed` in the main menu to see reports on completed jobs 
 
 10.) To purge the queued jobs list, go into `Configure settings` and select `Purge lists`
+
+Command Line usage:
+
+main.py [option] <argument>
+
+Options:
+
+-f, --file   <File Path>      Upload a File. 
+
+-d, --dir    <Directory Path> Upload a Directory.  
+
+-u, --url    <URL>            Upload a URL.
+
+-r, --report                  Check Reports.
+
+-h, --help                    Show Help.
