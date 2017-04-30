@@ -33,7 +33,7 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 
 5. Edit the `giant_VT/tokens.py` file, insert your API key into the key field
 
-  *(`key='YOUR KEY GOES HERE'`)
+⋅⋅*(`key='YOUR KEY GOES HERE'`)
 
 6. Run `main.py` and provide a valid target (File path, Directory path, or URL)
 
@@ -46,7 +46,6 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 10. To purge the queued jobs list, go into `Configure settings` and select `Purge lists`
 
 #### Command Line usage:
-
 ```
 main.py [option] <argument>
 Options:
