@@ -45,17 +45,9 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 
 #### About Scans, and public API rules
 
-Uploading to Virus Total and getting reports is an asynchronous process.
+Uploading to Virus Total and getting reports is an asynchronous process.  This means that an uploaded target's report is not immediately available.  Come back later and select the "check if queued scans have completed" option to see completed reports.  
 
-This means that an uploaded target's report is not immediately available.
-
-Come back later and select the "check if queued scans have completed" option to see completed reports.
-
-Using a public API key, you are limited to 4 requests per minute (once every 15 seconds).
-
-A 'request' is either an upload, or 4 reports.  
-
-If you have a private API key, the request rate is greatly increased (600 requests per minute).
+Using a public API key, you are limited to 4 requests per minute (once every 15 seconds).  A 'request' is either an upload, or 4 returned reports.  If you have a private API key, the request rate is greatly increased (600 requests per minute).
 
 [Click here to find out more about the Virus Total public API rules](https://www.virustotal.com/en/documentation/public-api/)
 
