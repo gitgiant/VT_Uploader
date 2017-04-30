@@ -1,5 +1,5 @@
-###Virus Total Uploader
-#### 
+#### Virus Total Uploader
+
 Uploads a target file, directory, or URL to Virus Total.  If the target is not in the VT database, your scan will be queued and completed shortly.
 This tool is used to upload jobs and check if jobs have completed, as well as display reports on completed jobs.
 ####What is Virus Total?
@@ -10,7 +10,7 @@ Uploading to VT expands the database, discovers more malicious files and false p
 <a href="https://www.virustotal.com/en/about/" title="About Virus Total">
 Click here to find out more about Virus Total</a>
 
-####Requirements
+#### Requirements
 
 Virus Total public/private API key.
 
@@ -20,7 +20,7 @@ Python 3+
 
 Windows Forensics options available only on Windows
 
-####Instructions
+#### Instructions
 Using this tool requires a Virus Total key which is linked with a VT account, in order to interact with the API.  To obtain a VT account and public API key, follow these instructions:
 
 1. <a href="https://www.virustotal.com/en/documentation/virustotal-community/#dlg-join">Click here to learn about joining the Virus Total community</a>
@@ -45,7 +45,7 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 
 10. To purge the queued jobs list, go into `Configure settings` and select `Purge lists`
 
-####Command Line usage:
+#### Command Line usage:
 
 ```
 main.py [option] <argument>
