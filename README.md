@@ -1,8 +1,7 @@
 ## Virus Total Uploader
-
 Uploads a target file, directory, or URL to Virus Total.  If the target is not in the VT database, your scan will be queued and completed shortly.
 This tool is used to upload jobs and check if jobs have completed, as well as display reports on completed jobs.
-####What is Virus Total?
+#### What is Virus Total?
 Virus Total is a website where you can upload a file or supply a URL, and VT will scan the target with around 60 different virus scanners from industry
 
 Uploading to VT expands the database, discovers more malicious files and false positives, and helps the security community.
