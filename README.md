@@ -31,7 +31,7 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
 
 4. Select 'My API Key'
 
-5. Edit the `giant_VT/tokens.py` file, insert your API key into the key field `key='YOUR KEY GOES HERE'
+5. Edit the `giant_VT/tokens.py` file, insert your API key into the key field `key='YOUR KEY GOES HERE'`
 
 6. Run `main.py` and provide a valid target (File path, Directory path, or URL)
 
