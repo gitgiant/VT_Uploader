@@ -7,6 +7,12 @@ import sys
 import platform
 import urllib
 
+# sets the current working directory to the folder which the script was run
+if (platform.system()) is 'Windows':
+    os.chdir(os.path.dirname(sys.argv[0]))
+else:
+    os.chdir(os.getcwd())
+
 # Command Line tools
 if len(sys.argv) > 1:
     for arg in range(1, len(sys.argv)):
@@ -41,11 +47,7 @@ if __name__ == '__main__':
     print(header)
     time.sleep(.4)
 
-    # sets the current working directory to the folder which the script was run
-    if (platform.system()) is 'Windows':
-        os.chdir(os.path.dirname(sys.argv[0]))
-    else:
-        os.chdir(os.getcwd())
+
     userChoice = '0'
     while userChoice != '7':
         print("______________________________________________")
