@@ -17,6 +17,8 @@ class MyHandler(FileSystemEventHandler):
 
     def on_modified(self, event):
         print(time.asctime() + " | " + os.path.abspath(event._src_path) + ' ' + event.event_type + '.')
+        if event._src_path == sys.argv[1]:
+            return
         if event.is_directory:
             upload_directory(event._src_path)
         else:
