@@ -7,15 +7,22 @@ import subprocess
 import platform
 import os
 from uploader import *
-# ignores sudo if not windows (hacky I know)
-if (platform.system()) is 'Windows':
-    sudo = ''
-    pythonVersion = ''
-else:
-    sudo = 'sudo '
-    pythonVersion = '3'
+
 class MyHandler(FileSystemEventHandler):
-    def on_any_event(self, event):
+    # cannot use on_any_event because we do not want to fire off when file deleted
+    def on_created(self, event):
+        if event.is_directory:
+            upload_directory(event._src_path)
+        else:
+            upload_file(event._src_path)
+
+    def on_modified(self, event):
+        if event.is_directory:
+            upload_directory(event._src_path)
+        else:
+            upload_file(event._src_path)
+
+    def on_moved(self, event):
         if event.is_directory:
             upload_directory(event._src_path)
         else:
