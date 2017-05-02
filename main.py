@@ -9,6 +9,13 @@ import urllib
 
 # sets the current working directory to the folder which the script was run
 if (platform.system()) is 'Windows':
+    print(sys.argv[0])
+    print(sys.argv[0])
+    print(sys.argv[0])
+    print(sys.argv[0])
+    print(sys.argv[0])
+    print(sys.argv[0])
+
     os.chdir(os.path.dirname(sys.argv[0]))
 else:
     os.chdir(os.getcwd())
