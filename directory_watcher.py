@@ -1,10 +1,10 @@
 import sys
 import time
-import logging
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import os
 from uploader import *
+
 
 class MyHandler(FileSystemEventHandler):
     # cannot use on_any_event because we do not want to fire off when file deleted

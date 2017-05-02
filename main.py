@@ -7,15 +7,16 @@ import sys
 import platform
 import urllib
 
+# TODO: Make report grabbing background process (with quiet/verbose output), positive scans to (user specified) json/csv/bucketwebpage?
+# TODO: Set up cron job for report grabber + directory watcher (watch API limits)
+# TODO: Webpage portal or UI for uploading to bucket (jupyter notebook?)
+# TODO: Implement URL scans, validate URLS
+# TODO: Implement Windows forensics
+# TODO: Clean up and compact code, error testing
+# TODO: Script to take aws creds, create and mount s3 bucket
+
 # sets the current working directory to the folder which the script was run
 if (platform.system()) is 'Windows':
-    print(sys.argv[0])
-    print(sys.argv[0])
-    print(sys.argv[0])
-    print(sys.argv[0])
-    print(sys.argv[0])
-    print(sys.argv[0])
-
     os.chdir(os.path.dirname(sys.argv[0]))
 else:
     os.chdir(os.getcwd())

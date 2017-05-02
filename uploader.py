@@ -53,7 +53,7 @@ def upload_file(targetFile):
     found = calculate_sha256(targetFile)
     # If file not in sha256_list.txt
     if found:
-        print("File " + targetFile + " is present in local queue, it has already been uploaded to virus total")
+        print("File " + os.path.basename(targetFile) + " is present in local queue, it has already been uploaded to virus total")
         print("Please check if queued scans have completed and view their reports.")
         # return a uploadTime of '15' seconds to make waitTime 0 for next job (15 - uploadTime = 0)
         return 15
