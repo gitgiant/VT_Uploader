@@ -42,14 +42,15 @@ if len(sys.argv) > 1:
         # -u URL upload TODO: Validate urls
         elif sys.argv[arg] == '-u' or sys.argv[arg] == '--url':
             uploader.upload_URL(sys.argv[arg+1])
+        elif sys.argv[arg] == '-s' or sys.argv[arg] == '--scrape':
+            URL_scraper(sys.argv[arg+1])
         # -r check reports
         elif sys.argv[arg] == '-r' or sys.argv[arg] == '--report':
             retriever.check_file_scans(True)
+            retriever.check_URL_scans(True)
         elif sys.argv[arg] == '-q' or sys.argv[arg] == '--quiet':
             retriever.check_file_scans(False)
             retriever.check_URL_scans(False)
-        elif sys.argv[arg] == '-s' or sys.argv[arg] == '--scrape':
-            URL_scraper(sys.argv[arg+1])
         elif sys.argv[arg] == '-w' or sys.argv[arg] == '--watch':
             watcher.start_watcher(sys.argv[arg+1])
         elif sys.argv[arg] == '-h' or sys.argv[arg] == '--help':
@@ -62,7 +63,6 @@ if len(sys.argv) > 1:
 if __name__ == '__main__':
     print(header)
     time.sleep(.4)
-
 
     userChoice = '0'
     while userChoice != '9':
