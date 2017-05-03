@@ -1,3 +1,6 @@
 #! /bin/bash
-cd ~/mattias-huber-capstone2017
-sudo python3 ~/mattias-huber-capstone2017/main.py -q
+cd "$(dirname "$0")";
+echo $PWD$;
+sudo python3 ~/mattias-huber-capstone2017/main.py -r;
+cat ~/mattias-huber-capstone2017/completed_list;
+
