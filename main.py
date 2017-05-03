@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
 
     userChoice = '0'
-    while userChoice != '7':
+    while userChoice != '8':
         print("______________________________________________")
         print("Please select from the following options:")
         print("1: Select a file.")
