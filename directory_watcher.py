@@ -1,7 +1,17 @@
 import sys
 import time
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+try:
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler
+except ImportError:
+    print("Watchdog Module required.  Attempting to install using pip.")
+    try:
+        import pip
+        pip.main(['install', watchdog])
+    except Exception as e:
+        print(e)
+        print("Pip module not found!  Please go to http://pythonhosted.org/watchdog/ to install watchdog module.")
+
 import os
 from uploader import *
 

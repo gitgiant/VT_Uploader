@@ -18,7 +18,7 @@ import report
 
 
 # TODO: Scan resource_list.txt, find files that are completed and remove them, create queue
-def check_file_scans():
+def check_file_scans(verbose):
     try:
         fileResourceList = open('resource_list', 'rb')
     except Exception as e:
@@ -46,6 +46,7 @@ def check_file_scans():
             for i in range (0, 4):
                 try:
                     sendList+=reportList[i].decode("utf-8") + ','
+                # if there are less than 4 jobs left
                 except:
                     pass
             sendList.rstrip(',')
@@ -60,7 +61,11 @@ def check_file_scans():
         except Exception as e:
             print(e)
         json_response = response.json()
-        report.display_scan_report(json_response)
+        if verbose:
+            report.display_scan_report(json_response)
+        else:
+            pass
+            #report.output_report(json_response)
         end = time.time()
         retrieveTime = math.floor(end - start)
         # if user took longer than 15 seconds to view report, or there was just one report
@@ -77,6 +82,7 @@ def check_file_scans():
         #     fout.writelines(data[4:])
         numLines = sum(1 for line in open('resource_list', 'rb'))
         print("Resource_list.txt has " + str(numLines) + " files left to check for reports.")
+
 
 # TODO: Return a result of just a single target, not whole list
 def check_single_file_scan(sha256):

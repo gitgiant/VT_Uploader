@@ -37,16 +37,17 @@ if len(sys.argv) > 1:
                 uploader.upload_directory(sys.argv[arg+1])
             else:
                 print("Error " + sys.argv[arg+1] + " is not a directory.")
-
         # -u URL upload TODO: Validate urls
         elif sys.argv[arg] == '-u' or sys.argv[arg] == '--url':
             uploader.upload_URL(sys.argv[arg+1])
         # -r check reports
         elif sys.argv[arg] == '-r' or sys.argv[arg] == '--report':
-            file_retriever.check_file_scans()
-        # Incorrect input
+            file_retriever.check_file_scans(True)
+        elif sys.argv[arg] == '-q' or sys.argv[arg] == '--quiet':
+            file_retriever.check_file_scans(False)
         elif sys.argv[arg] == '-h' or sys.argv[arg] == '--help':
             display_help()
+        # Incorrect input
         else:
             display_usage()
         exit()
@@ -101,7 +102,7 @@ if __name__ == '__main__':
         # Check Scans
         elif userChoice == '4':
             print("Checking resource_list.txt for targets that have completed scanning.")
-            file_retriever.check_file_scans()
+            file_retriever.check_file_scans(True)
 
         # Pull Shim Cache
         elif userChoice == '5':

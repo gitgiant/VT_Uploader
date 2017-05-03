@@ -76,6 +76,7 @@ def display_usage():
 -d, --dir    <Directory Path> Upload a Directory.
 -u, --url    <URL>            Upload a URL.
 -r, --report                  Check Reports.
+-q, --quiet                   Check Reports but do not display.
 -h, --help                    Show Help.""")
 
 
@@ -176,7 +177,6 @@ in the main menu to see reports on completed jobs
 
 # Check for default key
 if key == 'YOUR KEY GOES HERE':
-    print('')
-    print("""Virus Total Public API key needs to be correctly inputted into tokens.py file.""")
+    print('Virus Total Public API key needs to be correctly inputted into tokens.py file.')
     display_instructions()
     exit()

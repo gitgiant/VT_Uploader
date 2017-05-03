@@ -1,6 +1,7 @@
 # Used to display returned reports in JSON files
 import webbrowser
 import os
+import time
 
 def display_file_report(json_response):
     print("Message: " + json_response['verbose_msg'])
@@ -60,6 +61,12 @@ def display_scan_report(json_response):
     if not is_non_zero_file('resource_list'):
         print("resource_list.txt is either empty or not found.")
         return
+    # appended to for positive results, completed results
+    try:
+        positive_list = open('positive_list', 'a+')
+        completed_list = open('completed_list', 'a+')
+    except Exception as e:
+        print(e)
 
     response_list =[]   # used to handle cases where there is one returned dict vs many dicts in a list
     # if json_response is a dict, then it is only 1 report, pack it into a list
@@ -80,7 +87,6 @@ def display_scan_report(json_response):
         # Response code of 1 means the report is finished
         if dicts['response_code'] == 1:
             print("Filename: " + return_filename(dicts['sha256']))
-            print("sha256: " + dicts['sha256'])
             print(dicts['permalink'])
             print("Total Positives: " + str(dicts['positives']))
             print("Total Negatives: " + str(dicts['total'] - dicts['positives']))
@@ -106,7 +112,13 @@ def display_scan_report(json_response):
                 else:
                     print("Invalid input.")
                     choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):")
-
+            # Write the completed report to positive_list (if positive) and completed_list
+            reportString = ("Filename: " + return_filename(dicts['sha256']) + "\nDate/Time: " + time.asctime()
+                            + "\nsha256: " + dicts['sha256'] + '\n' + dicts['permalink'] + "\nTotal Positives: "
+                            + str(dicts['positives']) + " Total Negatives: " + str(dicts['total'] - dicts['positives']) + '\n')
+            for keys, values in ((k, v) for k, v in dicts['scans'].items() if v['detected']):
+                positive_list.write(reportString + '\n')
+            completed_list.write(reportString + '\n')
             # Delete the first four lines of resource list as they have been reported on.
             # TODO make more efficient, move into report.py as only the scans that have finished should be removed from resource_list
             with open('resource_list', 'r') as fin:
