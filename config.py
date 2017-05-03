@@ -18,13 +18,12 @@ Thank you for contributing to the virus total community."""
 # Used for key check
 from tokens import key
 
-
+# TODO: Add aws key?
 
 def configure_settings():
     choice = '0'
 
     while choice != '5':
-        # TODO: configure settings
         print("Please select from the following options:")
         print("1: Purge lists.")
         print("2: Print lists.")
@@ -81,7 +80,7 @@ def configure_settings():
                 print(e)
         # TODO: allow user to change API key
         elif choice == '3':
-            print("Please ")
+            key = input("Please Enter a valid API key:\n")
         elif choice == '5':
             return
 def display_usage():
@@ -90,6 +89,7 @@ def display_usage():
 -d, --dir    <Directory Path> Upload a Directory.
 -w, --watch  <Directory Path> Watch a Directory and upload new files.
 -u, --url    <URL>            Upload a URL.
+-s, --scrape <URL>            Scrape a webpage, uploading all found URLs
 -r, --report                  Check Reports.
 -q, --quiet                   Check Reports but do not display.
 -h, --help                    Show Help.""")

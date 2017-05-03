@@ -1,29 +1,28 @@
 import time
 from config import *
 import os
-import file_retriever
+import retriever
 import uploader
 import sys
 import platform
 import urllib
 import watcher
+import URL_scraper
 
-# TODO: Make report grabbing background process (with quiet/verbose output), positive scans to (user specified) json/csv/bucketwebpage?
 # TODO: Set up cron job for report grabber + directory watcher (watch API limits)
 # TODO: Webpage portal or UI for uploading to bucket (jupyter notebook?)
-# TODO: Implement URL scans, validate URLS
 # TODO: Implement Windows forensics
-# TODO: Clean up and compact code, error testing
+# TODO: Clean up and compact code, remove repeated code (URL and file upload/report), error testing, exception handling
 # TODO: Script to take aws creds, create and mount s3 bucket
-# TODO: Scan every URL on a webpage (include the page itself)
 # TODO: Combine watch and quiet into one, or lock resource_list
-
+# TODO: Add IP scan
 # sets the current working directory to the folder which the script was run
 if (platform.system()) is 'Windows':
     os.chdir(os.path.dirname(sys.argv[0]))
 else:
     os.chdir(os.getcwd())
 
+# TODO: error check (only allow one commandline argument set?)
 # Command Line tools
 if len(sys.argv) > 1:
     for arg in range(1, len(sys.argv)):
@@ -45,9 +44,12 @@ if len(sys.argv) > 1:
             uploader.upload_URL(sys.argv[arg+1])
         # -r check reports
         elif sys.argv[arg] == '-r' or sys.argv[arg] == '--report':
-            file_retriever.check_file_scans(True)
+            retriever.check_file_scans(True)
         elif sys.argv[arg] == '-q' or sys.argv[arg] == '--quiet':
-            file_retriever.check_file_scans(False)
+            retriever.check_file_scans(False)
+            retriever.check_URL_scans(False)
+        elif sys.argv[arg] == '-s' or sys.argv[arg] == '--scrape':
+            URL_scraper(sys.argv[arg+1])
         elif sys.argv[arg] == '-w' or sys.argv[arg] == '--watch':
             watcher.start_watcher(sys.argv[arg+1])
         elif sys.argv[arg] == '-h' or sys.argv[arg] == '--help':
@@ -55,7 +57,7 @@ if len(sys.argv) > 1:
         # Incorrect input
         else:
             display_usage()
-        exit()
+            exit()
 # TODO: Clean up output, add progress bar for uploads,
 if __name__ == '__main__':
     print(header)
@@ -63,17 +65,18 @@ if __name__ == '__main__':
 
 
     userChoice = '0'
-    while userChoice != '8':
+    while userChoice != '9':
         print("______________________________________________")
         print("Please select from the following options:")
         print("1: Select a file.")
         print("2: Select a Directory.")
         print("3: Select a URL.")
-        print("4: Check if queued scans have completed.")
-        print("5: Watch a directory for new files.")
-        print("6: Pull recently executed files from Windows shim cache.")
-        print("7: Configure settings.")
-        print("8: Exit.")
+        print("4: Check if queued file scans have completed.")
+        print("5: Check if queued URL scans have completed.")
+        print("6: Watch a directory for new files.")
+        print("7: Pull recently executed files from Windows shim cache.")
+        print("8: Configure settings.")
+        print("9: Exit.")
 
         userChoice = input()
         # File
@@ -96,23 +99,27 @@ if __name__ == '__main__':
 
         # URL
         elif userChoice == '3':
-            targetURL = input("Please enter URL of file:")
-            uploader.upload_URL(targetURL)
+            targetURL = input("Please enter a valid http, https, or ftp URL: ")
+            #uploader.upload_URL(targetURL)
+            URL_scraper.scrape_URLS(targetURL)
 
-
-        # Check Scans
+        # Check File Scans
         elif userChoice == '4':
-            print("Checking resource_list.txt for targets that have completed scanning.")
-            file_retriever.check_file_scans(True)
+            print("Checking resource_list for targets that have completed scanning.")
+            retriever.check_file_scans(True)
 
-        # Watch Directory
+        # Check URL Scans
         elif userChoice == '5':
+            print("Checking URL_list for targets that have completed scanning.")
+            retriever.check_URL_scans(True)
+        # Watch Directory
+        elif userChoice == '6':
             path = input("Please specify a path of a directory to watch for new files.")
             watcher.start_watcher(path)
 
 
         # Pull Shim Cache
-        elif userChoice == '6':
+        elif userChoice == '7':
             # Test for Windows
             if platform.system() is 'Windows':
                 from shimCache import *
@@ -141,10 +148,10 @@ if __name__ == '__main__':
 
         # Settings
         # TODO: Allow user to change key, change from public key to private key mode
-        elif userChoice == '7':
+        elif userChoice == '8':
             configure_settings()
 
-        elif userChoice == '8':
+        elif userChoice == '9':
             print("Exiting.")
             exit(1)
         # Whoops

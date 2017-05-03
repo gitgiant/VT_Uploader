@@ -7,12 +7,13 @@ def calculate_sha256(targetFile):
     sha256 = hashlib.sha256()
 
     # Build sha256 hex digest block by block
-    with open(targetFile, 'rb') as f:
-        for block in iter(lambda: f.read(65536), b''):
-            sha256.update(block)
+    try:
+        with open(targetFile, 'rb') as f:
+            for block in iter(lambda: f.read(65536), b''):
+                sha256.update(block)
+    except Exception as e:
+        print(e)
 
-    # print("Target File Name: " + f.name)
-    # print("sha256: " + sha256.hexdigest())
 
     #search the sha256 list for this file's sha256
     found = False

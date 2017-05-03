@@ -4,6 +4,7 @@
 import math
 import os
 import time
+from urllib.parse import urlparse
 
 # check if requests module installed
 try:
@@ -17,7 +18,6 @@ except ImportError:
         print(e)
         print("Pip module not found!  Please go to http://docs.python-requests.org/en/master/ to install requests Module.")
 
-from report import display_URL_report
 from tokens import key
 
 from calc_sha import calculate_sha256
@@ -47,7 +47,7 @@ def upload_file(targetFile):
         # return a uploadTime of '15' seconds to make waitTime 0 for next job (15 - uploadTime = 0)
         return 15
     else:
-        print("Filesize: " + str(round(size/1000000,2)) + " MB.")
+        print("Filesize: " + str(round(size/1000000,3)) + " MB.")
 
     # If file has passed checks, sha256 and check sha256_list.txt
     found = calculate_sha256(targetFile)
@@ -71,43 +71,46 @@ def upload_file(targetFile):
             uploadTime = math.floor(end - start)
             print("Upload Complete @ " + str(uploadTime) + " seconds.")
 
-            # display information from returned json document
-            # display_file_report(json_response)
         except Exception as e:
             print(e)
-        # add response to the csv response file to scan later
+        # add response to the resource_list to scan later
         with open('resource_list', "a") as fileWrite:
             fileWrite.write(json_response['resource'] + '\n')
 
     return uploadTime
 
-# TODO implement
 def upload_URL(targetURL):
-    # Sets API key to key token, sets URL
-    params = {'apikey': key, 'url': targetURL}
-    print("Target URL: " + targetURL)
+    # check if a valid url
+    o = urlparse(targetURL)
+    if o.scheme == 'http' or o.scheme == 'https' or o.scheme == 'ftp':
+        # Sets API key to key token, sets URL
+        params = {'apikey': key, 'url': targetURL}
+        print("Target URL: " + targetURL)
+        # Search URL_list.txt to see if this URL has already been uploaded
+        with open('URL_list', "r") as URLRead:
+            for line in URLRead:
+                if targetURL in line:
+                    print("URL is present in local queue, it has already been uploaded to virus total")
+                    print("Please check if queued scans have completed and view their reports.")
+                    return 15
+        # Upload to virustotal
+        print("Uploading, please wait...")
+        print("______________________________________________")
+        response = requests.post('https://www.virustotal.com/vtapi/v2/url/scan', data=params)
+        # TODO: Whenever you exceed the public API request rate limit a 204 HTTP status code is returned.
+        # TODO: If you try to perform calls to functions for which you do not have the required privileges
+        # TODO: an HTTP Error 403 Forbidden is raised.
+        json_response = response.json()
 
-    # Search URL_list.txt to see if this URL has already been uploaded
-    with open('URL_list', "r") as URLRead:
-        for line in URLRead:
-            if targetURL in line:
-                print("URL is present in local queue, it has already been uploaded to virus total")
-                print("Please check if queued scans have completed and view their reports.")
-                print("Returning to main menu")
-                return
-    # Upload to virustotal
-    print("Uploading, please wait...")
-    print("______________________________________________")
-    response = requests.post('https://www.virustotal.com/vtapi/v2/url/scan', data=params)
-    # TODO: Whenever you exceed the public API request rate limit a 204 HTTP status code is returned.
-    # TODO: If you try to perform calls to functions for which you do not have the required privileges
-    # TODO: an HTTP Error 403 Forbidden is raised.
-    json_response = response.json()
-
-    display_URL_report(json_response)
-    with open('URL_list', "a") as URLWrite:
-        URLWrite.write(json_response['resource'] + ',')
-
+        # TODO: Catch malformed URLs before they are uploaded to save request rate
+        if json_response['response_code'] ==-1:
+            print(json_response['verbose_msg'])
+        else:
+            # add response to the URL_list to scan later
+            with open('URL_list', "a") as URLWrite:
+                URLWrite.write(json_response['url'] + '\n')
+    else:
+        print(targetURL + " is not an http, https, or ftp valid URL.")
 def upload_directory(targetDirectory):
     # walk through directory
     for folder, subs, files in os.walk(targetDirectory):
