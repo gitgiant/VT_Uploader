@@ -90,6 +90,8 @@ def display_scan_report(json_response, verbose):
             print(dicts['permalink'])
             print("Total Positives: " + str(dicts['positives']))
             print("Total Negatives: " + str(dicts['total'] - dicts['positives']))
+
+            # Argument given in main.py for verbose report output
             if verbose:
                 choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):").lower()
                 while choice != 'n':
@@ -120,11 +122,11 @@ def display_scan_report(json_response, verbose):
             for keys, values in ((k, v) for k, v in dicts['scans'].items() if v['detected']):
                 positive_list.write(reportString + '\n')
             completed_list.write(reportString + '\n')
-            # Delete the first four lines of resource list as they have been reported on.
+            # Delete line with response code 1 as it has been reported on
             with open('resource_list', 'r') as fin:
                 data = fin.read().splitlines(True)
             with open('resource_list', 'w') as fout:
-                fout.writelines(data[4:])
+                fout.writelines(data[1:])
         # response code of -2 means the job is queued and still processing
         elif dicts['response_code'] == -2:
             pass

@@ -1,5 +1,7 @@
 from uploader import *
 import sys
+
+# Given a directory path, watch for new files and upload them
 def start_watcher(path):
 
     # set the path to watch as argument, otherwise watch current directory
@@ -13,5 +15,3 @@ def start_watcher(path):
             exit()
     else:
         print("Error, path " + path + " is not a valid directory path.")
-
-# start_watcher(sys.argv[1] if len(sys.argv) > 1 else '.')

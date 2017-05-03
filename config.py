@@ -61,15 +61,21 @@ def configure_settings():
                 pass
         elif choice == '2':
             try:
-                print("Printing resource_list.txt:")
+                print("Printing resource_list:")
                 f = open('resource_list', 'r')
                 print(f.read().replace(",", "\n"))
-                print("Printing sha256_list.txt:")
+                print("Printing sha256_list:")
                 f = open('sha256_list', 'r')
                 print(f.read().replace(",", "\t"))
-                print("Printing URL_list.txt:")
+                print("Printing URL_list:")
                 f = open('URL_list', 'r')
                 print(f.read().replace(",", "\n"))
+                print("Printing completed_list:")
+                f = open('completed_list', 'r')
+                print(f.read())
+                print("Printing positive_list:")
+                f = open('positive_list', 'r')
+                print(f.read())
                 f.close()
             except Exception as e:
                 print(e)

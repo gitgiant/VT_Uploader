@@ -16,6 +16,7 @@ import watcher
 # TODO: Clean up and compact code, error testing
 # TODO: Script to take aws creds, create and mount s3 bucket
 # TODO: Scan every URL on a webpage (include the page itself)
+# TODO: Combine watch and quiet into one, or lock resource_list
 
 # sets the current working directory to the folder which the script was run
 if (platform.system()) is 'Windows':
