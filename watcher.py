@@ -1,13 +1,17 @@
 from uploader import *
 import sys
-if __name__ == "__main__":
+def start_watcher(path):
 
     # set the path to watch as argument, otherwise watch current directory
-    path = sys.argv[1] if len(sys.argv) > 1 else '.'
-    try:
-        while True:
-            upload_directory(sys.argv[1])
-            time.sleep(10)
-    # Keyboard Interrupt in pycharm is ctrl-f2
-    except KeyboardInterrupt:
-        exit()
+    if os.path.isdir(path):
+        try:
+            while True:
+                upload_directory(path)
+                time.sleep(10)
+        # Keyboard Interrupt in pycharm is ctrl-f2
+        except KeyboardInterrupt:
+            exit()
+    else:
+        print("Error, path " + path + " is not a valid directory path.")
+
+# start_watcher(sys.argv[1] if len(sys.argv) > 1 else '.')

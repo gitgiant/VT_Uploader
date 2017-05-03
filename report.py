@@ -57,7 +57,7 @@ def launch_permalink(json_response):
 
 # TODO: Document, currently only reports on resource_list, not URL_list,
 # TODO: Add threading to pull reports behind while user is viewing previous reports
-def display_scan_report(json_response):
+def display_scan_report(json_response, verbose):
     if not is_non_zero_file('resource_list'):
         print("resource_list.txt is either empty or not found.")
         return
@@ -90,28 +90,29 @@ def display_scan_report(json_response):
             print(dicts['permalink'])
             print("Total Positives: " + str(dicts['positives']))
             print("Total Negatives: " + str(dicts['total'] - dicts['positives']))
+            if verbose:
+                choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):").lower()
+                while choice != 'n':
+                    # print only detected results
+                    if choice == 'p':
+                        # filter based on detected being TRUE
+                        for keys, values in ((k, v) for k, v in dicts['scans'].items() if v['detected']):
+                            print("{} {}".format(keys, values['version']))
+                            print("Detected: " + str(values['detected']) + "\t\tResult: " + str(values['result'])+'\n')
+                        break
+                    # print all results
+                    elif choice == 'a':
+                        for keys, values in dicts['scans'].items():
+                            print("{} {}".format(keys, values['version']))
+                            print("Detected: " + str(values['detected']) + "\t\tResult: " + str(values['result']) + '\n')
+                        break
+                    # exit
+                    elif choice == 'n':
+                        break
+                    else:
+                        print("Invalid input.")
+                        choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):")
 
-            choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):").lower()
-            while choice != 'n':
-                # print only detected results
-                if choice == 'p':
-                    # filter based on detected being TRUE
-                    for keys, values in ((k, v) for k, v in dicts['scans'].items() if v['detected']):
-                        print("{} {}".format(keys, values['version']))
-                        print("Detected: " + str(values['detected']) + "\t\tResult: " + str(values['result'])+'\n')
-                    break
-                # print all results
-                elif choice == 'a':
-                    for keys, values in dicts['scans'].items():
-                        print("{} {}".format(keys, values['version']))
-                        print("Detected: " + str(values['detected']) + "\t\tResult: " + str(values['result']) + '\n')
-                    break
-                # exit
-                elif choice == 'n':
-                    break
-                else:
-                    print("Invalid input.")
-                    choice = input("Would you like to display results from ([P]ositive Scans / [A]ll scans / [N]one):")
             # Write the completed report to positive_list (if positive) and completed_list
             reportString = ("Filename: " + return_filename(dicts['sha256']) + "\nDate/Time: " + time.asctime()
                             + "\nsha256: " + dicts['sha256'] + '\n' + dicts['permalink'] + "\nTotal Positives: "
@@ -120,12 +121,10 @@ def display_scan_report(json_response):
                 positive_list.write(reportString + '\n')
             completed_list.write(reportString + '\n')
             # Delete the first four lines of resource list as they have been reported on.
-            # TODO make more efficient, move into report.py as only the scans that have finished should be removed from resource_list
             with open('resource_list', 'r') as fin:
                 data = fin.read().splitlines(True)
             with open('resource_list', 'w') as fout:
                 fout.writelines(data[4:])
-        # TODO: present more information to the user about queued jobs
         # response code of -2 means the job is queued and still processing
         elif dicts['response_code'] == -2:
             pass
@@ -148,3 +147,4 @@ def return_filename(sha256):
                 return splitLine[1].rstrip('\n')
         print("sha256 not found in sha256_list.txt")
         return "NULL"
+

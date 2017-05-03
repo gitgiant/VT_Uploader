@@ -82,6 +82,7 @@ def display_usage():
     print("""Usage main.py [option] <argument>\nOptions:
 -f, --file   <File Path>      Upload a File.
 -d, --dir    <Directory Path> Upload a Directory.
+-w, --watch  <Directory Path> Watch a Directory and upload new files.
 -u, --url    <URL>            Upload a URL.
 -r, --report                  Check Reports.
 -q, --quiet                   Check Reports but do not display.

@@ -6,6 +6,7 @@ import uploader
 import sys
 import platform
 import urllib
+import watcher
 
 # TODO: Make report grabbing background process (with quiet/verbose output), positive scans to (user specified) json/csv/bucketwebpage?
 # TODO: Set up cron job for report grabber + directory watcher (watch API limits)
@@ -14,6 +15,7 @@ import urllib
 # TODO: Implement Windows forensics
 # TODO: Clean up and compact code, error testing
 # TODO: Script to take aws creds, create and mount s3 bucket
+# TODO: Scan every URL on a webpage (include the page itself)
 
 # sets the current working directory to the folder which the script was run
 if (platform.system()) is 'Windows':
@@ -45,6 +47,8 @@ if len(sys.argv) > 1:
             file_retriever.check_file_scans(True)
         elif sys.argv[arg] == '-q' or sys.argv[arg] == '--quiet':
             file_retriever.check_file_scans(False)
+        elif sys.argv[arg] == '-w' or sys.argv[arg] == '--watch':
+            watcher.start_watcher(sys.argv[arg+1])
         elif sys.argv[arg] == '-h' or sys.argv[arg] == '--help':
             display_help()
         # Incorrect input
@@ -65,9 +69,10 @@ if __name__ == '__main__':
         print("2: Select a Directory.")
         print("3: Select a URL.")
         print("4: Check if queued scans have completed.")
-        print("5: Pull recently executed files from Windows shim cache.")
-        print("6: Configure settings.")
-        print("7: Exit.")
+        print("5: Watch a directory for new files.")
+        print("6: Pull recently executed files from Windows shim cache.")
+        print("7: Configure settings.")
+        print("8: Exit.")
 
         userChoice = input()
         # File
@@ -86,12 +91,7 @@ if __name__ == '__main__':
             else:
                 print("Error: Directory Not Found.")
                 continue
-            # walk through directory
-            # for folder, subs, files in os.walk(rootDir):
-            #     for fileName in files:
-            #         uploader.upload_file(os.path.join(folder,fileName))
-            #         # API limits 600 uploads / minute
-            #         time.sleep(.1)
+
 
         # URL
         elif userChoice == '3':
@@ -104,8 +104,14 @@ if __name__ == '__main__':
             print("Checking resource_list.txt for targets that have completed scanning.")
             file_retriever.check_file_scans(True)
 
-        # Pull Shim Cache
+        # Watch Directory
         elif userChoice == '5':
+            path = input("Please specify a path of a directory to watch for new files.")
+            watcher.start_watcher(path)
+
+
+        # Pull Shim Cache
+        elif userChoice == '6':
             # Test for Windows
             if platform.system() is 'Windows':
                 from shimCache import *
@@ -131,12 +137,13 @@ if __name__ == '__main__':
                         print(line + " file not found.")
             except Exception as e:
                 print(e)
+
         # Settings
         # TODO: Allow user to change key, change from public key to private key mode
-        elif userChoice == '6':
+        elif userChoice == '7':
             configure_settings()
 
-        elif userChoice == '7':
+        elif userChoice == '8':
             print("Exiting.")
             exit(1)
         # Whoops

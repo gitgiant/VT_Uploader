@@ -61,11 +61,7 @@ def check_file_scans(verbose):
         except Exception as e:
             print(e)
         json_response = response.json()
-        if verbose:
-            report.display_scan_report(json_response)
-        else:
-            pass
-            #report.output_report(json_response)
+        report.display_scan_report(json_response, verbose)
         end = time.time()
         retrieveTime = math.floor(end - start)
         # if user took longer than 15 seconds to view report, or there was just one report
