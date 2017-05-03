@@ -34,7 +34,7 @@ def configure_settings():
         if choice == '1':
             choice = input("This will clear all lists including already scanned files.  Are you sure? [y/n]: ").lower()
             if choice == 'y':
-                print("Purging resource_list.txt, sha256_list.txt, and URL_list.txt")
+                print("Purging resource_list, sha256_list, URL_list, completed_list, and positive_list")
                 f = open('resource_list', 'r+')
                 f.seek(0)
                 f.truncate()
@@ -42,6 +42,14 @@ def configure_settings():
                 f.seek(0)
                 f.truncate()
                 f = open('URL_list', 'r+')
+                f.seek(0)
+                f.truncate()
+                f.close()
+                f = open('completed_list', 'r+')
+                f.seek(0)
+                f.truncate()
+                f.close()
+                f = open('positive_list', 'r+')
                 f.seek(0)
                 f.truncate()
                 f.close()
