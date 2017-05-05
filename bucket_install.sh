@@ -38,10 +38,10 @@ make
 sudo make install
 echo "Mounting the drive to /mnt/s3/."
 sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs ${BucketName} /mnt/s3/
-#echo "Adding mount cronjob."
-#crontab -l > mycron
-#echo "* * * * * /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd {$BucketName} /mnt/s3/ &>/tmp/mycommand.log" >> mycron
-#crontab mycron
-#rm mycron
-echo "Adding mount on boot entry to /etc/fstab/."
-echo "{bucketname} /mnt/s3 fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
+echo "Adding mount cronjob."
+crontab -l > mycron
+echo "* * * * * /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd $BucketName /mnt/s3/ % &>/tmp/mycommand.log" >> mycron
+crontab mycron
+rm mycron
+#echo "Adding mount on boot entry to /etc/fstab/."
+#echo "$BucketName /mnt/s3 fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
