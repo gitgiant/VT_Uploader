@@ -40,7 +40,7 @@ echo "Mounting the drive to /mnt/s3/."
 sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs ${BucketName} /mnt/s3/
 echo "Adding mount cronjob."
 crontab -l > mycron
-echo "* * * * * /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd $BucketName /mnt/s3/ % &>/tmp/mycommand.log" >> mycron
+echo "* * * * * /usr/local/bin/s3fs -o _netdev,allow_other,dbglevel=dbg,use_cache=/tmp/cache/,curldb,passwd_file=/etc/passwd-s3fs $BucketName /mnt/s3/ % &>/tmp/mycommand.log" >> mycron
 crontab mycron
 rm mycron
 #echo "Adding mount on boot entry to /etc/fstab/."

@@ -1,4 +1,15 @@
 import requests
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    print("Beautiful Soup Module required.  Attempting to install using pip.")
+    try:
+        import pip
+        pip.main(['install', bs4])
+    except Exception as e:
+        print(e)
+        print("Pip module not found!  Please go to https://www.crummy.com/software/BeautifulSoup/#Download to install Beautiful Soup Module.")
+
 from bs4 import BeautifulSoup
 import uploader
 

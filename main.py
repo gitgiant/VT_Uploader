@@ -7,7 +7,7 @@ import sys
 import platform
 import urllib
 import watcher
-import URL_scraper
+# import URL_scraper
 
 # TODO: Set up cron job for report grabber + directory watcher (watch API limits)
 # TODO: Webpage portal or UI for uploading to bucket (jupyter notebook?)
@@ -42,8 +42,8 @@ if len(sys.argv) > 1:
         # -u URL upload TODO: Validate urls
         elif sys.argv[arg] == '-u' or sys.argv[arg] == '--url':
             uploader.upload_URL(sys.argv[arg+1])
-        elif sys.argv[arg] == '-s' or sys.argv[arg] == '--scrape':
-            URL_scraper(sys.argv[arg+1])
+        # elif sys.argv[arg] == '-s' or sys.argv[arg] == '--scrape':
+        #     URL_scraper(sys.argv[arg+1])
         # -r check reports
         elif sys.argv[arg] == '-r' or sys.argv[arg] == '--report':
             retriever.check_file_scans(True)
