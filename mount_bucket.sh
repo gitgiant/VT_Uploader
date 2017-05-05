@@ -13,7 +13,7 @@ read AccessKeyID
 echo "Please enter the AWS Secret Key ID, followed by [ENTER]:"
 read SecretKey
 echo "Creating ~/.passwd-s3fs file."
-echo ${AccessKeyID}:${SecretKey} > /etc/passwd-s3fs
+echo $AKIAIQBD6SPZRWHP37FQ:$UmhcDk24f9dJsi+2lv6ar9HiqQ7y0ZJ9ZwEqK4FN > /etc/passwd-s3fs
 sudo chmod 640 /etc/passwd-s3fs
 echo "Creating mountpoint /mnt/s3/ and temp cache /tmp/cache/"
 sudo mkdir /mnt/s3/
