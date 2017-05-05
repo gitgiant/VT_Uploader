@@ -53,5 +53,6 @@ crontab -l > mycron
 echo "* * * * * /usr/local/bin/s3fs -o _netdev,allow_other,dbglevel=dbg,use_cache=/tmp/cache/,curldb,passwd_file=/etc/passwd-s3fs $BucketName /mnt/s3/ % &>/tmp/mycommand.log" >> mycron
 crontab mycron
 rm mycron
+
 #echo "Adding mount on boot entry to /etc/fstab/."
 #echo "$BucketName /mnt/s3 fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
