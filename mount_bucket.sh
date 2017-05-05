@@ -13,7 +13,7 @@ read AccessKeyID
 echo "Please enter the AWS Secret Key ID, followed by [ENTER]:"
 read SecretKey
 echo "Creating ~/.passwd-s3fs file."
-echo AKIAIQBD6SPZRWHP37FQ:UmhcDk24f9dJsi+2lv6ar9HiqQ7y0ZJ9ZwEqK4FN > /etc/passwd-s3fs
+echo "AKIAIQBD6SPZRWHP37FQ:UmhcDk24f9dJsi+2lv6ar9HiqQ7y0ZJ9ZwEqK4FN" > /etc/passwd-s3fs
 sudo chmod 640 /etc/passwd-s3fs
 echo "Creating mountpoint /mnt/s3/ and temp cache /tmp/cache/"
 sudo mkdir /mnt/s3/
@@ -41,14 +41,10 @@ sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/p
 #echo "Would you like to add automated Virus Total Uploader scans to the S3 Mount? [y/n]"
 #read choice
 #if [ ${choice,,} == 'y' ]; then
-echo "Adding watch and report automation to S3 mount."
+echo "Adding watch and report automation and to S3 mount."
 crontab -l > mycron
 echo "* * * * * sudo python3 $PWD/main.py -w /mnt/s3/" >> mycron
 echo "* * * * * sudo python3 $PWD/main.py -r" >> mycron
-crontab mycron
-rm mycron
-#fi
-echo "Adding mount cronjob."
 crontab -l > mycron
 echo "* * * * * /usr/local/bin/s3fs -o _netdev,allow_other,dbglevel=dbg,use_cache=/tmp/cache/,curldb,passwd_file=/etc/passwd-s3fs $BucketName /mnt/s3/ % &>/tmp/mycommand.log" >> mycron
 crontab mycron
