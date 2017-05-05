@@ -1,5 +1,6 @@
 import sys
 import time
+
 try:
     from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
