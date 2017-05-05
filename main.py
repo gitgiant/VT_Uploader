@@ -101,7 +101,7 @@ if __name__ == '__main__':
         elif userChoice == '3':
             targetURL = input("Please enter a valid http, https, or ftp URL: ")
             #uploader.upload_URL(targetURL)
-            URL_scraper.scrape_URLS(targetURL)
+            #URL_scraper.scrape_URLS(targetURL)
 
         # Check File Scans
         elif userChoice == '4':
