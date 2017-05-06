@@ -44,9 +44,9 @@ sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/p
 #if [ ${choice,,} == 'y' ]; then
 echo "Adding watch and report automation to S3 mount."
 crontab -l > mycron
-echo "* * * * * /usr/local/bin/s3fs bucketgiant /mnt/s3/ -o _netdev,allow_other,dbglevel=dbg,use_cache=/tmp/cache/,curldb,passwd_file=/etc/passwd-s3fs" >> mycron
-echo "* * * * * sudo python3 $PWD/main.py -w /mnt/s3/" >> mycron
-echo "* * * * * sudo python3 $PWD/main.py -r" >> mycron
+echo "* * * * * /usr/local/bin/s3fs bucketgiant /mnt/s3/ -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
+echo "* * * * * sleep 5 && cd $PWD && sudo python3 $PWD/main.py -w /mnt/s3/" >> mycron
+echo "* * * * * sleep 30 && cd $PWD && sudo python3 $PWD/main.py -q" >> mycron
 crontab mycron
 rm mycron
 

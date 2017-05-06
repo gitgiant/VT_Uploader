@@ -20,7 +20,6 @@ def calculate_sha256(targetFile):
     with open('sha256_list', "r") as sha256Read:
         for line in sha256Read:
             if sha256.hexdigest() in line:
-                # TODO If file hash the same but name is different, display name of previous upload?
                 print("SHA found under previous upload with path: " + line.strip(sha256.hexdigest()).strip(','))
                 found = True
                 return found

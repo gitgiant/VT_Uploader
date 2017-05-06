@@ -33,13 +33,13 @@ if len(sys.argv) > 1:
                 uploader.upload_file(sys.argv[arg+1])
             else:
                 print("Error " + sys.argv[arg+1] + " is not a file.")
+
         # -d directory upload
         elif sys.argv[arg] == '-d' or sys.argv[arg] == '--dir':
             if os.path.isdir(sys.argv[arg+1]):
                 uploader.upload_directory(sys.argv[arg+1])
             else:
                 print("Error " + sys.argv[arg+1] + " is not a directory.")
-        # -u URL upload TODO: Validate urls
         elif sys.argv[arg] == '-u' or sys.argv[arg] == '--url':
             uploader.upload_URL(sys.argv[arg+1])
         # elif sys.argv[arg] == '-s' or sys.argv[arg] == '--scrape':
@@ -59,7 +59,9 @@ if len(sys.argv) > 1:
         else:
             display_usage()
             exit()
-# TODO: Clean up output, add progress bar for uploads,
+    # if command arguments done, exit
+    exit()
+
 if __name__ == '__main__':
     print(header)
     time.sleep(.4)
