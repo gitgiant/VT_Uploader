@@ -13,7 +13,7 @@ read AccessKeyID
 echo "Please enter the AWS Secret Key ID, followed by [ENTER]:"
 read SecretKey
 echo "Creating /etc/passwd-s3fs file."
-sudo echo "{$AccessKeyID}:{$SecretKey}" > /etc/passwd-s3fs
+sudo echo "$AccessKeyID:$SecretKey" > /etc/passwd-s3fs
 sudo chmod 640 /etc/passwd-s3fs
 echo "Please specify a path for the bucket to be mounted (suggested: /mnt/s3/), followed by [ENTER]:"
 read MountPoint
@@ -31,7 +31,6 @@ if [ -n "$(command -v yum)" ]; then
 	sudo yum install automake fuse fuse-devel gcc-c++ git libcurl-devel libxml2-devel make openssl-devel
 fi
 echo "Pulling and installing s3fs from github."
-# cd ~/
 git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 cd s3fs-fuse
 ./autogen.sh
@@ -46,16 +45,16 @@ read choice
 if [ ${choice} == 'y' ]; then
     echo "Adding watch and report automation to S3 mount."
     crontab -l > mycron
-    echo "* * * * * /usr/local/bin/s3fs bucketgiant {$MountPoint} -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
+    echo "* * * * * /usr/local/bin/s3fs {$BucketName} {$MountPoint} -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
     echo "* * * * * sleep 5 && cd $PWD && sudo python3 $PWD/main.py -w {$MountPoint}" >> mycron
     echo "* * * * * sleep 30 && cd $PWD && sudo python3 $PWD/main.py -q" >> mycron
     crontab mycron
     rm mycron
 else
     crontab -l > mycron
-    echo "* * * * * /usr/local/bin/s3fs bucketgiant {$MountPoint} -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
+    echo "* * * * * /usr/local/bin/s3fs {$BucketName} {$MountPoint} -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
     crontab mycron
     rm mycron
 fi
 echo "Adding mount on boot entry to /etc/fstab/."
-echo "$BucketName {$MountPoint} fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
+sudo echo "{$BucketName} {$MountPoint} fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
