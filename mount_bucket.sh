@@ -29,7 +29,7 @@ if [ -n "$(command -v yum)" ]; then
 	sudo yum install automake fuse fuse-devel gcc-c++ git libcurl-devel libxml2-devel make openssl-devel
 fi
 echo "Pulling and installing s3fs from github."
-cd ~/
+# cd ~/
 git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 cd s3fs-fuse
 ./autogen.sh
@@ -41,14 +41,13 @@ sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/p
 #echo "Would you like to add automated Virus Total Uploader scans to the S3 Mount? [y/n]"
 #read choice
 #if [ ${choice,,} == 'y' ]; then
-echo "Adding watch and report automation and to S3 mount."
+echo "Adding watch and report automation to S3 mount."
 crontab -l > mycron
+echo "* * * * * /usr/local/bin/s3fs bucketgiant /mnt/s3/ -o _netdev,allow_other,dbglevel=dbg,use_cache=/tmp/cache/,curldb,passwd_file=/etc/passwd-s3fs" >> mycron
 echo "* * * * * sudo python3 $PWD/main.py -w /mnt/s3/" >> mycron
 echo "* * * * * sudo python3 $PWD/main.py -r" >> mycron
-crontab -l > mycron
-echo "* * * * * /usr/local/bin/s3fs -o _netdev,allow_other,dbglevel=dbg,use_cache=/tmp/cache/,curldb,passwd_file=/etc/passwd-s3fs $BucketName /mnt/s3/ % &>/tmp/mycommand.log" >> mycron
 crontab mycron
 rm mycron
 
-#echo "Adding mount on boot entry to /etc/fstab/."
-#echo "$BucketName /mnt/s3 fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
+echo "Adding mount on boot entry to /etc/fstab/."
+echo "$BucketName /mnt/s3 fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
