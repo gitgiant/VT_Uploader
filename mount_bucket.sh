@@ -36,6 +36,7 @@ cd s3fs-fuse
 ./configure
 make
 sudo make install
+cd ..
 echo "Mounting the drive to /mnt/s3/."
 sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs ${BucketName} /mnt/s3/
 #echo "Would you like to add automated Virus Total Uploader scans to the S3 Mount? [y/n]"
