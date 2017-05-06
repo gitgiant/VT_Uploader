@@ -12,11 +12,13 @@ echo "Please enter the AWS Access Key ID, followed by [ENTER]:"
 read AccessKeyID
 echo "Please enter the AWS Secret Key ID, followed by [ENTER]:"
 read SecretKey
-echo "Creating ~/.passwd-s3fs file."
-echo "AKIAIQBD6SPZRWHP37FQ:UmhcDk24f9dJsi+2lv6ar9HiqQ7y0ZJ9ZwEqK4FN" > /etc/passwd-s3fs
+echo "Creating /etc/passwd-s3fs file."
+echo "{$AccessKeyID}:{$SecretKey}" > /etc/passwd-s3fs
 sudo chmod 640 /etc/passwd-s3fs
-echo "Creating mountpoint /mnt/s3/ and temp cache /tmp/cache/"
-sudo mkdir /mnt/s3/
+echo "Please specify a path for the bucket to be mounted (suggested: /mnt/s3/), followed by [ENTER]:"
+read MountPoint
+echo "Creating mountpoint ${MountPoint} and temp cache /tmp/cache/"
+sudo mkdir $MountPoint
 sudo mkdir /tmp/cache/
 chmod 770 /tmp/cache/
 echo "Downloading Dependencies with either apt-get or yum."
@@ -37,18 +39,23 @@ cd s3fs-fuse
 make
 sudo make install
 cd ..
-echo "Mounting the drive to /mnt/s3/."
-sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs ${BucketName} /mnt/s3/
-#echo "Would you like to add automated Virus Total Uploader scans to the S3 Mount? [y/n]"
-#read choice
-#if [ ${choice,,} == 'y' ]; then
-echo "Adding watch and report automation to S3 mount."
-crontab -l > mycron
-echo "* * * * * /usr/local/bin/s3fs bucketgiant /mnt/s3/ -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
-echo "* * * * * sleep 5 && cd $PWD && sudo python3 $PWD/main.py -w /mnt/s3/" >> mycron
-echo "* * * * * sleep 30 && cd $PWD && sudo python3 $PWD/main.py -q" >> mycron
-crontab mycron
-rm mycron
-
+echo "Mounting the drive to {$MountPoint}."
+sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs ${BucketName} ${MountPoint}
+echo "Would you like to add automated Virus Total Uploader scans to the S3 Mount? [y/n]"
+read choice
+if [ ${choice} == 'y' ]; then
+    echo "Adding watch and report automation to S3 mount."
+    crontab -l > mycron
+    echo "* * * * * /usr/local/bin/s3fs bucketgiant {$MountPoint} -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
+    echo "* * * * * sleep 5 && cd $PWD && sudo python3 $PWD/main.py -w {$MountPoint}" >> mycron
+    echo "* * * * * sleep 30 && cd $PWD && sudo python3 $PWD/main.py -q" >> mycron
+    crontab mycron
+    rm mycron
+else
+    crontab -l > mycron
+    echo "* * * * * /usr/local/bin/s3fs bucketgiant {$MountPoint} -o allow_other,dbglevel=dbg,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs" >> mycron
+    crontab mycron
+    rm mycron
+fi
 echo "Adding mount on boot entry to /etc/fstab/."
-echo "$BucketName /mnt/s3 fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
+echo "$BucketName {$MountPoint} fuse.s3fs _netdev,allow_other,dbglevel=dbg,retries=10,curldb,passwd_file=/etc/passwd-s3fs 0 0" >> /etc/fstab
