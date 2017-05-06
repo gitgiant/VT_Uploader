@@ -13,14 +13,14 @@ read AccessKeyID
 echo "Please enter the AWS Secret Key ID, followed by [ENTER]:"
 read SecretKey
 echo "Creating /etc/passwd-s3fs file."
-echo "{$AccessKeyID}:{$SecretKey}" > /etc/passwd-s3fs
+sudo echo "{$AccessKeyID}:{$SecretKey}" > /etc/passwd-s3fs
 sudo chmod 640 /etc/passwd-s3fs
 echo "Please specify a path for the bucket to be mounted (suggested: /mnt/s3/), followed by [ENTER]:"
 read MountPoint
 echo "Creating mountpoint ${MountPoint} and temp cache /tmp/cache/"
 sudo mkdir $MountPoint
 sudo mkdir /tmp/cache/
-chmod 770 /tmp/cache/
+sudo chmod 770 /tmp/cache/
 echo "Downloading Dependencies with either apt-get or yum."
 if [ -n "$(command -v apt-get)" ]; then
 	echo "apt-get detected."
