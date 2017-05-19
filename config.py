@@ -129,6 +129,30 @@ Windows Forensics options available only on Windows.""")
     display_instructions()
 
     print("""
+Performing a Manual Scan:
+
+1. Run `main.py` and provide a valid target
+(File path, Directory path, or URL)
+
+2. If a target is not in the Virus Total database,
+you will be placed in a queue
+
+3. Queue should take anywhere from a minute to an hour,
+depends on traffic and size of jobs
+
+4. Select `Check if queued scans have completed`
+in the main menu to see reports on completed jobs
+
+5. The system keeps track of:
+    * Waiting file jobs in the `resource_list` file.
+    * Waiting URL jobs in the `URL_list` file.
+    * Hashes of already uploaded jobs in the `sha256_list` file.
+    * Completed reports in the `completed_list` file.
+    * Positive reports in the `positive_list` file.
+
+6. To purge the queued jobs list, go into
+`Configure settings` and select `Purge lists`
+
 About Scans, and public API rules:
 Uploading to Virus Total and getting reports is an asynchronous process.
 This means that an uploaded target's report is not immediately available.
@@ -174,21 +198,7 @@ click on the profile picture in the upper right corner
 
 5. Edit the `giant_VT/tokens.py` file, insert your
 API key into the key field (key='YOUR KEY GOES HERE')
-
-6. Run `main.py` and provide a valid target
-(File path, Directory path, or URL)
-
-7. If a target is not in the Virus Total database,
-you will be placed in a queue
-
-8. Queue should take anywhere from a minute to an hour,
-depends on traffic and size of jobs
-
-9. Select `Check if queued scans have completed`
-in the main menu to see reports on completed jobs
-
-10. To purge the queued jobs list, go into
-`Configure settings` and select `Purge lists`""")
+""")
 
 # Check for default key
 if key == 'YOUR KEY GOES HERE':

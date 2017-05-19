@@ -39,7 +39,7 @@ make
 sudo make install
 cd ..
 echo "Mounting the drive to {$MountPoint}."
-sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs ${BucketName} ${MountPoint}
+sudo /usr/local/bin/s3fs -o allow_other,use_cache=/tmp/cache/,passwd_file=/etc/passwd-s3fs $BucketName $MountPoint
 echo "Would you like to add automated Virus Total Uploader scans to the S3 Mount? [y/n]"
 read choice
 if [ ${choice} == 'y' ]; then
