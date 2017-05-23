@@ -54,7 +54,7 @@ Using this tool requires a Virus Total key which is linked with a VT account, in
     * Positive reports in the `positive_list` file.
 6. To purge these lists, go into `Configure settings` and select `Purge lists`.
 
-####Amazon Web Services Functionality:
+#### Amazon Web Services Functionality:
 Utilizing Amazon Web Services (AWS), Elastic Compute Cloud (EC2), and Simple Storage Service (S3), this system can be set up allow users to place files into a S3 bucket which will then be scanned automatically and user can be notified of any possible positives found.  All of this is possible utilizing AWS free tier.
 
 1. The User places a file they wish to scan into the S3 bucket, such as `http://testbucket.s3.amazonaws.com`
