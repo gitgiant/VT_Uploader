@@ -62,7 +62,7 @@ Utilizing Amazon Web Services (AWS), Elastic Compute Cloud (EC2), and Simple Sto
 3. The EC2 instance waits until Virus Total returns a completed report.
 4. If any positives are found the instance notifies the user, otherwise the report is added to the completed list.
 
-![AWS Functionality](http://i.imgur.com/NYX6LWV.png"AWS Functionality")
+![AWS Functionality](http://i.imgur.com/NYX6LWV.png "AWS Functionality")
 
 #### Setting Up AWS Functionality
 1. If you do not already have an S3 bucket, please log into to the [AWS Management Console](https://aws.amazon.com/console/). Under `All Services > Storage`, select `S3` and then select `+ Create Bucket`.
