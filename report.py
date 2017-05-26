@@ -237,7 +237,6 @@ def return_filename(sha256):
 def publish_sns(msg):
     response = client.publish(
         TopicArn='arn:aws:sns:us-west-2:057468764699:VT_positives',
-        PhoneNumber='string',
         Message=msg,
         Subject='Virus Total Positive Found',
         MessageStructure='string',
