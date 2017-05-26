@@ -240,11 +240,4 @@ def publish_sns(msg):
         Message=msg,
         Subject='Virus Total Positive Found',
         MessageStructure='string',
-        MessageAttributes={
-            'string': {
-                'DataType': 'string',
-                'StringValue': 'string',
-                'BinaryValue': b'bytes'
-            }
-        }
     )
