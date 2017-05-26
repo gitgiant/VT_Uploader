@@ -2,6 +2,9 @@
 import webbrowser
 import os
 import time
+import boto3
+
+client = boto3.client('sns')
 
 # TODO only display_scan_report is used
 # def display_file_report(json_response):
@@ -122,6 +125,7 @@ def display_scan_report(json_response, verbose):
                             + str(dicts['positives']) + " Total Negatives: " + str(dicts['total'] - dicts['positives']) + '\n')
             for keys, values in ((k, v) for k, v in dicts['scans'].items() if v['detected']):
                 positive_list.write(reportString + '\n')
+                publish_sns(reportString)
             completed_list.write(reportString + '\n')
             # Delete line with response code 1 as it has been reported on
             with open('resource_list', 'r') as fin:
@@ -201,6 +205,7 @@ def display_URL_report(json_response, verbose):
                             + " Total Negatives: " + str(dicts['total'] - dicts['positives']) + '\n')
             for keys, values in ((k, v) for k, v in dicts['scans'].items() if v['detected']):
                 positive_list.write(reportString + '\n')
+                publish_sns(reportString)
             completed_list.write(reportString + '\n')
             # Delete line with response code 1 as it has been reported on
             with open('URL_list', 'r') as fin:
@@ -228,3 +233,19 @@ def return_filename(sha256):
         print("sha256 not found in sha256_list.txt")
         return "NULL"
 
+
+def publish_sns(msg):
+    response = client.publish(
+        TopicArn='arn:aws:sns:us-west-2:057468764699:VT_positives',
+        PhoneNumber='string',
+        Message=msg,
+        Subject='Virus Total Positive Found',
+        MessageStructure='string',
+        MessageAttributes={
+            'string': {
+                'DataType': 'string',
+                'StringValue': 'string',
+                'BinaryValue': b'bytes'
+            }
+        }
+    )
